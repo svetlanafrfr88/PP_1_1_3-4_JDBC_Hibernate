@@ -14,6 +14,7 @@ public class Util {
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/mybase";
     private static final String DB_USERNAME = "postgres";
     private static final String DB_PASSWORD = "postgres";
+    private static SessionFactory sessionFactory;
 
 
     public static Connection getConnection() {
@@ -26,9 +27,14 @@ public class Util {
         }
         return connection;
     }
+
     public static SessionFactory getSessionFactory() {
-        Configuration configuration = new Configuration().addAnnotatedClass(User.class);
-        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        try {
+            Configuration configuration = new Configuration().addAnnotatedClass(User.class);
+            sessionFactory = configuration.buildSessionFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return sessionFactory;
     }
 }
